@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDrop } from 'react-dnd'
-import { Box, Stack, HStack, VStack, Heading, Text } from '@chakra-ui/react'
+import { Box, Stack, HStack, VStack, Heading, Text, Button } from '@chakra-ui/react'
+import { CloseButton } from './ui/close-button.tsx'
 
 interface Mechanism {
 	id: string
@@ -16,10 +17,12 @@ const DropArea = ({
 	onDrop,
 	mechanismsInArea,
 	handleEditMechanism,
+	handleDeleteMechanism,
 }: {
 	onDrop: (item: Mechanism) => void
 	mechanismsInArea: Mechanism[]
 	handleEditMechanism: (mechanism: Mechanism) => void
+	handleDeleteMechanism: (id: string) => void
 }) => {
 	const [{ isOver }, drop] = useDrop(() => ({
 		accept: 'MECHANISM',
@@ -56,10 +59,23 @@ const DropArea = ({
 					borderRadius='5px'
 					cursor='pointer'
 					onClick={() => handleEditMechanism(item)}
+					position='relative'
 				>
 					<Heading as='h3' size='lg' color='black'>
 						{item.name}
 					</Heading>
+					<CloseButton
+						position='absolute'
+						top='1px'
+						right='1px'
+						borderRadius='2px'
+						size='3xs'
+						variant='subtle'
+						bgColor='#242424'
+						transition='0.2s'
+						_hover={{ bgColor: '#979797FF', color: '#2C2B2B8C' }}
+						onClick={() => handleDeleteMechanism(item.id)}
+					></CloseButton>
 					{item.type === 'keypad' && (
 						<Text as='p' textStyle='sm' color='black'>
 							Typ: Klawiatura 4x3

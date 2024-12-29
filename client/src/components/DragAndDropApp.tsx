@@ -44,17 +44,23 @@ const DragAndDropApp = () => {
 		setSelectedMechanism(null)
 	}
 
+	const handleDeleteMechanism = (id: string) => {
+		setMechanismsInArea(mechanismsInArea.filter(item => item.id !== id))
+	}
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<Box className='app-container'>
-				<Heading as='h1' size='4xl' textAlign='center' p='1em 2em' className='app-heading'>
+				<Heading as='h1' size='4xl' textAlign='center' p='0.5em' className='app-heading'>
 					Kreator mechanizmów
 				</Heading>
 				<Stack
 					className='main-stack'
 					direction={{ base: 'column', md: 'row' }}
 					justify='space-between'
-					p={{ base: '0.5em', md: '1em' }}
+					p={{ base: '0 0.5em', md: '0 1em' }}
+					h='90vh'
+					overflow={{ base: 'auto', md: 'hidden' }}
 				>
 					<VStack className='available-mechanisms' w={{ base: '100%', md: '20%' }}>
 						<Heading as='h2' size='xl'>
@@ -78,6 +84,7 @@ const DragAndDropApp = () => {
 							onDrop={handleDrop}
 							mechanismsInArea={mechanismsInArea}
 							handleEditMechanism={handleEditMechanism}
+							handleDeleteMechanism={handleDeleteMechanism}
 						/>
 					</Box>
 					{selectedMechanism && (
